@@ -37,16 +37,18 @@ const initialProductsState = {
 }
 
 const productsReducer = (state = initialProductsState, action) => {
-  switch(action?.type) {
+  switch (action?.type) {
     case 'SET_ACTIVE_CATEGORY':
       return {
         ...state,
-        filteredProducts: state.allProducts.filter(product => product.category === action.category)
+        filteredProducts: state.allProducts.filter(
+          (product) => product.category === action.category
+        ),
       };
     default:
-      console.warn(`Unhandled action type: ${action?.type}`);
       return state;
   }
-}
+};
+
 
 export default productsReducer;
