@@ -5,8 +5,8 @@
 .MuiCard-root {
   margin-bottom: 10px;
   display: inline-block;
-  width: 200px;
-  height: 250px;
+  width: 400px;
+  height: 300px;
   
 
 
@@ -50,7 +50,9 @@
 
   }
 }
+.MuiButtonBase-root{
 
+}
 .MuiList-root {
   // styles for list
 }
@@ -68,4 +70,10 @@
   flex-wrap: wrap;
   & div {
   }
+}
+
+
+.cartList{
+  border: solid black 2px;
+  margin: 0px;
 }
