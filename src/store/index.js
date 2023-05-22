@@ -4,11 +4,9 @@ import productsReducer from './products';
 
 let reducers = combineReducers({
   categories: categoryReducer,
-  products : productsReducer,
+  products: productsReducer,
 });
 
 let store = createStore(reducers);
 
 export default store;
-
-
