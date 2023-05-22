@@ -4,6 +4,7 @@ import store from './store';
 import Categories from './Components/Categories';
 import ActiveCategory from './Components/ActiveCategory';
 import Header from './Components/Header';
+import Footer from './Components/Footer'
 
 function App() {
   return (
@@ -12,8 +13,11 @@ function App() {
         <header className="App-header">
           <Header />
           <Categories />
+          <div className="itemBox">
           <ActiveCategory />
+          </div>
         </header>
+        <Footer />
       </div>
     </Provider>
   );

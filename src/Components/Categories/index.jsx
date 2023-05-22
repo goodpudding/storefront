@@ -5,7 +5,6 @@ import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
-import Product from '../Products';
 
 const categories = ['Cat Food', 'Litter', 'Accessories'];
 
