@@ -1,0 +1,71 @@
+*{
+  box-sizing: border-box;
+}
+
+.MuiCard-root {
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 200px;
+  height: 250px;
+  
+
+
+  .MuiCardMedia-root {
+    width: 100%;
+    padding: 5px;
+    justify-content: center;
+    object-fit: scale-down;
+  }
+
+  .MuiCardContent-root {
+    .MuiTypography-root {
+      &.MuiTypography-h5 {
+        // styles for h5 typography
+        text-align: center;
+
+      }
+
+      &.MuiTypography-body2 {
+        // styles for body2 typography
+        // color: text.secondary;
+        
+      }
+    }
+  }
+}
+
+.MuiListItem-root {
+  // styles for list item
+  max-width: 200px;
+  margin-bottom: 20px;
+
+}
+
+.MuiTypography-root {
+  &.MuiTypography-h6 {
+    // styles for h6 typography
+    margin: auto;
+    text-align: center;
+    size: px;
+
+  }
+}
+
+.MuiList-root {
+  // styles for list
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+ 
+}
+
+.itemBox {
+  margin: 100px 50px;
+  display: flex;
+  flex-wrap: wrap;
+  & div {
+  }
+}
