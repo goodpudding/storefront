@@ -1,10 +1,27 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
 
 const Product = ({ product }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch({ type: 'ADD_TO_CART', payload: product });
+    dispatch({ type: 'DECREMENT_INVENTORY', payload: product.id });
+  };
+  
+  
+
+  const handleViewDetails = () => {
+    // Handle view details action
+    // You can navigate to a product details page or perform any other action
+  };
+
   return (
     <Card key={product.name}>
       <CardMedia
@@ -12,15 +29,15 @@ const Product = ({ product }) => {
         height="140"
         width="140"
         image={product.image}
-        alt={product.name}        
+        alt={product.name}
       />
       <CardContent>
-        <Typography variant="h5" component="div">
+        <Typography variant="h7" component="div">
           {product.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        {/* <Typography variant="body2" color="text.secondary">
           {product.description}
-        </Typography>
+        </Typography> */}
         <Typography variant="body2" color="text.secondary">
           Price: {product.price}
         </Typography>
@@ -28,6 +45,14 @@ const Product = ({ product }) => {
           Inventory: {product.inventory}
         </Typography>
       </CardContent>
+      <CardActions>
+        <Button size="small" onClick={handleAddToCart}>
+          Add to Cart
+        </Button>
+        <Button size="small" onClick={handleViewDetails}>
+          View details
+        </Button>
+      </CardActions>
     </Card>
   );
 };
