@@ -13,10 +13,10 @@ const ActiveCategory = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
+  const allProducts = useSelector((state) => state.products.allProducts);
   const activeCategory = useSelector(
     (state) => state.categories.activeCategory
   );
-  const allProducts = useSelector(state => state.products.allProducts);
 
   console.log("All Products:", allProducts);
   console.log("Active Category:", activeCategory);
@@ -30,8 +30,6 @@ const ActiveCategory = () => {
     } else {
       filteredProducts = allProducts;
     }
-    
-    
   }
 
   console.log("Filtered Products:", filteredProducts);
@@ -46,7 +44,7 @@ const ActiveCategory = () => {
       <List className="product-list">
         {filteredProducts &&
           filteredProducts.map((product) => (
-            <ListItem key={product.name}>
+            <ListItem key={product._id || product.id}>
               <Product product={product} />
             </ListItem>
           ))}

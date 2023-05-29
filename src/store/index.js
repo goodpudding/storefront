@@ -6,9 +6,13 @@ import logger from './middlewares/logger';
 import cartReducer from './cart';
 import { loadCartFromLocalStorage, saveCartToLocalStorage } from './cart';
 
+const rootReducer = combineReducers({
+  categories: categoryReducer,
+  products: productsReducer,
+  cart: cartReducer,
+});
 
-
-let rootReducer = (state, action) => {
+const storeEnhancer = (state = {}, action) => {
   if (action.type === 'LOAD_CART_FROM_STORAGE') {
     return {
       ...state,
@@ -16,36 +20,23 @@ let rootReducer = (state, action) => {
     };
   }
 
-  return combineReducers({
-    categories: categoryReducer,
-    products: productsReducer,
-    cart: cartReducer,
-  })(state, action);
+  return rootReducer(state, action);
 };
-
-
 
 const persistedState = loadCartFromLocalStorage();
 
 const store = createStore(
-  rootReducer,
+  storeEnhancer,
   persistedState,
   applyMiddleware(thunk, logger),
 );
 
 store.subscribe(() => saveCartToLocalStorage(store.getState().cart));
 
-
-
 // Dispatch an action to load the cart from local storage
 const cartFromStorage = loadCartFromLocalStorage();
 if (cartFromStorage !== undefined) {
   store.dispatch({ type: 'LOAD_CART_FROM_STORAGE', payload: cartFromStorage });
 }
-
-
-store.subscribe(() => saveCartToLocalStorage(store.getState().cart));
-
-
 
 export default store;

@@ -1,61 +1,51 @@
-
-
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { useSelector } from 'react-redux';
-
-
 const initialProductsState = {
   allProducts: [],
   results: []
-}
-
+};
 const productsReducer = (state = initialProductsState, action) => {
-  console.log('ACTION', action); // Add this line
-
   switch (action.type) {
     case 'FETCH_PRODUCTS':
-  console.log('Updating state with fetched pr oducts:', action.payload);
-  return {
-    ...state,
-    allProducts: action.payload,
-    results: action.payload,
-  };
-  case 'DECREMENT_INVENTORY':
-    console.log(action.payload);
-    return {
-      ...state,
-      results: state.results.map((product) => {
-        if (product._id === action.payload._id) { // updated this line
-          return {
-            ...product,
-            inventory: product.inventory - 1,
-          };
-        }
-        return product;
-      }),
-    };
-  case 'INCREMENT_INVENTORY':
-    console.log(action.payload);
-    return {
-      ...state,
-      results: state.results.map((product) => {
-        if (product._id === action.payload._id) { // updated this line
-          return {
-            ...product,
-            inventory: product.inventory + 1,
-          };
-        }
-        return product;
-      }),
-    };
-  
+      return {
+        ...state,
+        allProducts: action.payload.allProducts,
+        results: action.payload.allProducts, // Use allProducts instead of action.payload.results
+      };
+    case 'DECREMENT_INVENTORY':
+      const updatedProduct = action.payload;
+      return {
+        ...state,
+        results: state.results.map((product) => {
+          if (product._id === updatedProduct._id) {
+            return {
+              ...product,
+              inventory: updatedProduct.inventory,
+            };
+          }
+          return product;
+        }),
+      };
+    case 'INCREMENT_INVENTORY':
+      const updatedProductIncrement = action.payload;
+      return {
+        ...state,
+        results: state.results.map((product) => {
+          if (product._id === updatedProductIncrement._id) {
+            return {
+              ...product,
+              inventory: updatedProductIncrement.inventory,
+            };
+          }
+          return product;
+        }),
+      };
     default:
       return state;
   }
 };
-console.log('All Products:', initialProductsState);
 
+
+
+console.log('All Products:', initialProductsState.allProducts);
 
 export const fetchProducts = () => async (dispatch, getState) => {
   let response = await fetch('https://cat-store-api.onrender.com/cat-supplies');
@@ -63,12 +53,11 @@ export const fetchProducts = () => async (dispatch, getState) => {
 
   dispatch({
     type: 'FETCH_PRODUCTS',
-    payload: data
+    payload: { allProducts: data },
   });
 
   console.log('FETCHING PRODUCTS', getState(), data);
-}
-
+};
 
 export const decrementInventory = (productId) => async (dispatch, getState) => {
   try {
@@ -78,7 +67,7 @@ export const decrementInventory = (productId) => async (dispatch, getState) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        "operation": "decrement",
+        operation: 'decrement',
       }),
     });
 
@@ -87,13 +76,15 @@ export const decrementInventory = (productId) => async (dispatch, getState) => {
     }
 
     const updatedProduct = await response.json();
-    console.log(updatedProduct); // <-- add this line
+    console.log(updatedProduct);
 
     dispatch({
       type: 'DECREMENT_INVENTORY',
       payload: updatedProduct,
     });
 
+    // Trigger a refetch of the products
+    dispatch(fetchProducts());
   } catch (error) {
     console.error('Error:', error);
   }
@@ -122,11 +113,12 @@ export const incrementInventory = (productId) => async (dispatch, getState) => {
       payload: updatedProduct,
     });
 
+    // Trigger a refetch of the products
+    dispatch(fetchProducts());
   } catch (error) {
     console.error('Error:', error);
   }
 };
 
-const store = createStore(productsReducer, applyMiddleware(thunk));
 
 export default productsReducer;
