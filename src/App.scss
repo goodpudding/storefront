@@ -37,7 +37,7 @@
 .MuiListItem-root {
   // styles for list item
   max-width: 200px;
-  margin-bottom: 20px;
+  margin: 0;
 
 }
 
@@ -49,12 +49,6 @@
     size: px;
 
   }
-}
-.MuiButtonBase-root{
-
-}
-.MuiList-root {
-  // styles for list
 }
 
 .product-list {
@@ -68,12 +62,13 @@
   margin: 100px 50px;
   display: flex;
   flex-wrap: wrap;
-  & div {
-  }
+border: solid black 2px;
 }
 
 
 .cartList{
-  border: solid black 2px;
-  margin: 0px;
+  border: solid green 4px;
+}
+.simpleCartList{
+  margin: 0;
 }

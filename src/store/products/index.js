@@ -107,9 +107,10 @@ export const incrementInventory = (productId) => async (dispatch, getState) => {
     }
 
     const updatedProduct = await response.json();
+    console.log(updatedProduct);
 
     dispatch({
-      type: 'INCREMENT_INVENTORY',
+      type: 'DECREMENT_INVENTORY',
       payload: updatedProduct,
     });
 

@@ -17,6 +17,12 @@ export const removeFromCart = (uniqueCartId) => {
     payload: uniqueCartId,
   };
 };
+export const updateQuantity = (itemId, quantity) => {
+  return {
+    type: "UPDATE_QUANTITY",
+    payload: { itemId, quantity },
+  };
+};
 
 export function saveCartToLocalStorage(cart) {
   try {
@@ -69,6 +75,20 @@ const cartReducer = (state = initialCartState, action) => {
       return {
         ...state,
         ...action.payload,
+      };
+       case "UPDATE_QUANTITY":
+      const { itemId, quantity } = action.payload;
+      return {
+        ...state,
+        cartItems: state.cartItems.map((item) => {
+          if (item._id === itemId) {
+            return {
+              ...item,
+              quantity: quantity,
+            };
+          }
+          return item;
+        }),
       };
     default:
       return state;

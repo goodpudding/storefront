@@ -7,6 +7,8 @@ import ActiveCategory from "./Components/ActiveCategory";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import ProductDetails from "./Components/Details";
+import CartPage from "./Components/CartPage";
+import './App.scss';
 
 function App() {
   return (
@@ -16,15 +18,17 @@ function App() {
           <header className="App-header">
             <Header />
             <Categories />
-            <div className="itemBox">
-              <Routes>
-                <Route exact path="/" element={<ActiveCategory />} />
-                <Route
-                  path="/cat-supplies/:slug"
-                  element={<ProductDetails />}
-                />
-              </Routes>
-            </div>
+            <Routes>
+              <Route
+                exact
+                path="/"
+                element={
+                    <ActiveCategory />
+                }
+              />
+              <Route path="/cat-supplies/:slug" element={<ProductDetails />} />
+              <Route path="/cart" element={<CartPage />} />
+            </Routes>
           </header>
           <Footer />
         </div>

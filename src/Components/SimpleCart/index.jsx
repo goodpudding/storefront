@@ -9,7 +9,7 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { removeFromCart } from '../../store/cart'; // add the correct path to your actions file
-import { fetchProducts } from "../../store/products";
+import { fetchProducts, incrementInventory } from "../../store/products";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -19,20 +19,15 @@ const Cart = () => {
       return state.cart?.items;
     }) || [];
 
-    const handleDeleteItem = (uniqueCartId) => {
-      dispatch(removeFromCart(uniqueCartId));
-      dispatch(fetchProducts());
-
-    };
-    
-    
+  const handleDeleteItem = (uniqueCartId, productId) => {
+    dispatch(removeFromCart(uniqueCartId));
+    dispatch(incrementInventory(productId));
+    dispatch(fetchProducts());
+  };
 
   return (
-    <div className="cartList">
-      <List
-        dense
-        sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      >
+    <div id="cartList" style={{ display: "grid", placeItems: "end", gap: "8px" }}>
+      <List className="simpleCartList" dense sx={{ width: "100%", maxWidth: 200, bgcolor: "background.paper" }}>
         {cartItems.map((item, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton>
@@ -43,8 +38,8 @@ const Cart = () => {
               <IconButton
                 edge="end"
                 aria-label="delete"
-                onClick={() => handleDeleteItem(item.uniqueCartId)}
-                >
+                onClick={() => handleDeleteItem(item.uniqueCartId, item._id)}
+              >
                 <DeleteIcon />
               </IconButton>
             </ListItemButton>

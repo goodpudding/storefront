@@ -1,38 +1,44 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Badge from '@mui/material/Badge';
 import SimpleCart from '../SimpleCart';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart?.items) || [];
+  console.log('STATE CART', cartItems);
+  const navigate = useNavigate();
+
+  const handleCartClick = () => {
+    navigate('/cart');
+  };
+  const handleHomeClick = () => {
+    navigate('/');
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        
+          <Button color="inherit" onClick={handleHomeClick}>
+          <Link to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Typography variant="h4" sx={{ flexGrow: 1 }}>
             Our Store
           </Typography>
-          <Button color="inherit">
+          </Link>
+          </Button>
+          <Button color="inherit" onClick={handleCartClick}>
             <Badge badgeContent={cartItems.length} color="error">
-              Cart
+              <Link to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
+                Cart
+              </Link>
             </Badge>
           </Button>
         </Toolbar>

@@ -44,8 +44,11 @@ const ActiveCategory = () => {
       <List className="product-list">
         {filteredProducts &&
           filteredProducts.map((product) => (
+            
             <ListItem key={product._id || product.id}>
-              <Product product={product} />
+             
+              <Product className="itemBox" product={product}  />
+           
             </ListItem>
           ))}
       </List>
