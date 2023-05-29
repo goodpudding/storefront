@@ -3,9 +3,12 @@ const initialCategoryState = {
 };
 
 const categoryReducer = (state = initialCategoryState, action) => {
-  switch (action?.type) {
+  switch (action.type) {
     case 'SET_ACTIVE_CATEGORY':
-      return { ...state, activeCategory: action.category };
+      return {
+        ...state,
+        activeCategory: action.payload,
+      };
     default:
       return state;
   }

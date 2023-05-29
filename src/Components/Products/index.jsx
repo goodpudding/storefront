@@ -6,15 +6,16 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
+import { addToCart } from '../../store/cart'; // adjust the path as necessary
+
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    dispatch({ type: 'ADD_TO_CART', payload: product });
-    dispatch({ type: 'DECREMENT_INVENTORY', payload: product.id });
+    dispatch(addToCart(product));
+    dispatch({ type: 'DECREMENT_INVENTORY', payload: product._id }); // use _id instead of id
   };
-  
   
 
   const handleViewDetails = () => {

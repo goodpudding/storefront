@@ -6,19 +6,18 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
 
-const categories = ['Cat Food', 'Litter', 'Accessories'];
+const categories = ['Food', 'Litter', 'Accessories'];
 
 export default function Categories() {
   const dispatch = useDispatch();
   const activeCategory = useSelector(state => state.categories.activeCategory);
-
   const handleClick = (category) => {
-    dispatch({ type: 'SET_ACTIVE_CATEGORY', category: category.toLowerCase() });
-  };
+    dispatch({ type: 'SET_ACTIVE_CATEGORY', payload: category.toLowerCase() });
+};
 
-  const handleAllProducts = () => {
-    dispatch({ type: 'SET_ACTIVE_CATEGORY', category: '' });
-  };
+const handleAllProducts = () => {
+    dispatch({ type: 'SET_ACTIVE_CATEGORY', payload: '' });
+};
 
   return (
     <Box>

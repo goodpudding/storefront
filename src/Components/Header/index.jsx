@@ -12,7 +12,7 @@ import SimpleCart from '../SimpleCart';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart?.items) || [];
 
   return (
     <Box sx={{ flexGrow: 1 }}>
