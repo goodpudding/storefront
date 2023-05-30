@@ -1,26 +1,45 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
+import { addToCart } from "../../store/cart"; // adjust the path as necessary
+import { decrementInventory } from "../../store/products";
+import slugify from "slugify";
+import { fetchProducts } from "../../store/products";
+
+// Generate slug from product name
+const generateSlug = (productName) => {
+  return slugify(productName, { lower: true });
+};
+
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleAddToCart = () => {
-    dispatch({ type: 'ADD_TO_CART', payload: product });
-    dispatch({ type: 'DECREMENT_INVENTORY', payload: product.id });
+  
+  const handleAddToCart = (product) => {
+    const uniqueCartId = `${product._id}-${Date.now()}`;
+    console.log('!!!!!!!!!!', product.name, product._id);
+    
+    dispatch(addToCart({ ...product, uniqueCartId })); // Pass the product with uniqueCartId as payload
+    dispatch(decrementInventory(product._id));  // decrease inventory when a product is added to the cart
+    dispatch(fetchProducts());
+
   };
   
   
 
   const handleViewDetails = () => {
-    // Handle view details action
-    // You can navigate to a product details page or perform any other action
+    const slug = generateSlug(product.name);
+    navigate(`/cat-supplies/${slug}`);
   };
+  
 
   return (
     <Card key={product.name}>
@@ -46,9 +65,10 @@ const Product = ({ product }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={handleAddToCart}>
+        <Button size="small" onClick={() => handleAddToCart(product)}>
           Add to Cart
         </Button>
+
         <Button size="small" onClick={handleViewDetails}>
           View details
         </Button>
